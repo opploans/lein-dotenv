@@ -1,4 +1,4 @@
-(defproject lein-dotenv "1.0.0"
+(defproject opploans/lein-dotenv "1.0.1"
   :description "Merge .env into environment variables"
   :url "https://github.com/tpope/lein-dotenv"
   :license {:name "Eclipse Public License"

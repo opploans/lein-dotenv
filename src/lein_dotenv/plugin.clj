@@ -21,9 +21,7 @@
 (defn parse-str [body]
   (reduce
     (fn [m [_ k v]]
-      (if (m k (System/getenv k))
-        m
-        (assoc m k
+      (assoc m k
                (str/replace
                  v
                  #"\"(?:\\.|[^\"])*\"|'[^']*?'|\$\w+|\$\{\w+\}"
@@ -34,7 +32,7 @@
                          #"\\.|\$\w+|\$\{\w+\}"
                          (fn [match] (expand match m)))
                     \\ (subs % 1)
-                    \$ (expand % m))))))
+                    \$ (expand % m)))))
     {}
     (re-seq line-pattern body)))
 
@@ -45,7 +43,7 @@
 (defn bind-env [func project form]
   (let [files (list* ".env" (:dotenv-files project))
         env (apply merge (map #(parse-file (io/file eval/*dir* %)) files))]
-    (binding [eval/*env* (merge env eval/*env*)]
+    (binding [eval/*env* (merge eval/*env* env)]
       (func project form))))
 
 (defn- hooks []
